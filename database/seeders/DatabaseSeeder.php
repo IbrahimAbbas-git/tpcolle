@@ -14,12 +14,20 @@ class DatabaseSeeder extends Seeder
      * Seed the application's database.
      */
     public function run(): void
-    {
-        // User::factory(10)->create();
+{
+    // 1. Créer 10 Utilisateurs
+    $users = \App\Models\User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+    // 2. Créer 5 Projets
+    $projets = \App\Models\Projet::factory(5)->create();
+
+    // 3. Créer 30 Tâches liées aléatoirement à un utilisateur et un projet existant
+    for ($i = 0; $i < 30; $i++) {
+        \App\Models\Tache::factory()->create([
+            'user_id' => $users->random()->id,
+            'projet_id' => $projets->random()->idProjet,
         ]);
     }
 }
+}
+
